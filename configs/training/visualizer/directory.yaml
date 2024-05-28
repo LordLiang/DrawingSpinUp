@@ -1,0 +1,12 @@
+# @package _group_
+kind: directory
+outdir: samples
+key_order:
+  - A
+  - fake_CM
+  - CM
+  - discr_output_fake
+  - discr_output_real
+rescale_keys:
+  - discr_output_fake
+  - discr_output_real
