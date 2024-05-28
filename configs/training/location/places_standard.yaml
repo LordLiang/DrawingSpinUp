@@ -1,7 +1,0 @@
-# @package _group_
-bicar_root_dir: ${env:TORCH_HOME}/../dataset/3DBiCar/front_contour_render
-bicar_uid_json: ${env:TORCH_HOME}/../dataset/3DBiCar/bicar_uids.json
-
-out_root_dir: ./experiments
-tb_dir: ./tb_logs
-pretrained_models: ./pretrained
