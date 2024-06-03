@@ -1,0 +1,15 @@
+seed: 123456
+pretrained_model_name_or_path: 'flamehaze1115/wonder3d-v1.0' # or './ckpts'
+data_root: '../dataset/AnimatedDrawings/preprocessed'
+uid_list_file: '../dataset/AnimatedDrawings/drawings_uids.json'
+views: ['front', 'front_right', 'right', 'back', 'left', 'front_left']
+
+validation_dataset:
+  num_views: 6
+  bg_color: 'white'
+  img_wh: [256, 256]
+  crop_size: -1
+pipe_validation_kwargs:
+  eta: 1.0
+  guidance_scale: 1.0
+  num_inference_steps: 75
