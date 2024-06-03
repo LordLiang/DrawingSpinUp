@@ -1,0 +1,23 @@
+indir: ../dataset/AnimatedDrawings/preprocessed
+uid_json: ../dataset/AnimatedDrawings/drawings_uids.json
+
+generator:
+  kind: pix2pixhd_global
+  input_nc: 4
+  output_nc: 1
+  ngf: 64
+  n_downsampling: 3
+  n_blocks: 9
+  conv_kind: default
+  add_out_act: sigmoid
+  
+pretrained:
+  # pix2pixhd
+  path: ./experiments/zhoujie_2024-05-12_01-09-04_train_lama-regular.yaml_
+  generator_checkpoint: epoch=3-step=3599_generator.ckpt
+
+dataset:
+  kind: default
+
+device: cuda
+
