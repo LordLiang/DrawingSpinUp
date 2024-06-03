@@ -1,0 +1,1 @@
+python distributed.py --ortho_scale 1.35 --random_pose
