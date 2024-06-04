@@ -32,7 +32,7 @@ def move_to_device(obj, device):
     raise ValueError(f'Unexpected type {type(obj)}')
 
 
-def predict(config_path='configs/prediction/lama-fourier.yaml'):
+def predict(config_path):
 
     with open(config_path, 'r') as f:
         predict_config = OmegaConf.create(yaml.safe_load(f))
@@ -53,23 +53,24 @@ def predict(config_path='configs/prediction/lama-fourier.yaml'):
             batch['predicted'] = model(batch['input'])  
 
         input = batch['input'][0].permute(1, 2, 0).detach().cpu().numpy()
-        A = (input[:,:,0:3] * 255).astype('uint8') 
-        M = input[:,:,3:4]
-        alpha = (M * 255).astype('uint8')    
+        img = (input[:,:,0:3] * 255).astype('uint8') 
+        mask = input[:,:,3:4]
+        alpha = (mask * 255).astype('uint8')    
 
-        CM = batch['predicted'][0][0].detach().cpu().numpy()
-        CM = np.clip(CM*255, 0, 255).astype('uint8')  
-        CM_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_contour.png')
-        cv2.imwrite(CM_path, CM)
+        predicted = batch['predicted'][0][0].detach().cpu().numpy()
+        predicted = np.clip((predicted>0.2)*255, 0, 255).astype('uint8')  
+        predicted_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_contour.png')
+        cv2.imwrite(predicted_path, predicted)
 
-        inpait_mask = np.maximum(CM, 255-alpha[:,:,0]).astype(np.uint8)
-        A = cv2.inpaint(A, inpait_mask, 3, cv2.INPAINT_TELEA)
+        inpait_mask = np.maximum(predicted, 255-alpha[:,:,0]).astype(np.uint8)
+
+        inpainted = cv2.inpaint(img, inpait_mask, 3, cv2.INPAINT_TELEA)
         inpainted_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_inpainted_0.png')
-        cv2.imwrite(inpainted_path, cv2.cvtColor(A, cv2.COLOR_BGR2RGB))
+        cv2.imwrite(inpainted_path, cv2.cvtColor(inpainted, cv2.COLOR_BGR2RGB))
         inpainted_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_inpainted.png')
-        A = A * M + 255 * (1-M)
-        A = np.concatenate((A, alpha), 2)
-        cv2.imwrite(inpainted_path, cv2.cvtColor(A, cv2.COLOR_BGRA2RGBA))
+        inpainted = inpainted * mask + 255 * (1-mask)
+        inpainted = np.concatenate((inpainted, alpha), 2)
+        cv2.imwrite(inpainted_path, cv2.cvtColor(inpainted, cv2.COLOR_BGRA2RGBA))
 
 
 if __name__ == '__main__':
