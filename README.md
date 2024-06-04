@@ -37,13 +37,13 @@ python setup.py develop
 
 ## Step-1: Contour Removal
 ### Download
-You can download our processed character drawings from [AnimatedDrawings.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ee1Jgp-yZkRCtJPNO9Jz6HkBXYVKFR4zc_UuJpJ7i6JaIw?e=iy2iI6) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)) and pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
+You can download our processed character drawings from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EWi-CdpGraRMhbqvc7Fq9k0BulcK2or_9fjaEuWVAi97Dw?e=Sj018E) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)) and pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
 ```sh
 cd DrawingSpinUp
 mkdir dataset
-cd dataset
-# put AnimatedDrawings.zip here
-unzip AnimatedDrawings.zip
+cd dataset/AnimatedDrawings
+# put preprocessed.zip here
+unzip preprocessed.zip
 cd ..
 cd 1_lama_contour_remover
 # put experiments.zip here
@@ -70,7 +70,7 @@ cd 2_charactor_reconstructor
 python mv.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 # textured character reconstruction
 python recon.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
-# shape thinning (Optional)
+# shape thinning (optional)
 python thin.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 cd ..
 ```
