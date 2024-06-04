@@ -6,8 +6,7 @@ from PIL import Image
 from omegaconf import open_dict, OmegaConf
 import torch
 from torch.utils.data import Dataset, DataLoader, DistributedSampler, ConcatDataset
-from saicinpainting.training.data.aug import get_transform
-from saicinpainting.training.data.aug import get_params, get_data
+from saicinpainting.training.data.aug import get_transform, get_params, get_data
 
 LOGGER = logging.getLogger(__name__)
 
