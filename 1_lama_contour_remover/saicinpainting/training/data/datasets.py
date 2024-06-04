@@ -1,16 +1,11 @@
-import logging
 import os
 import json
 from PIL import Image
-
 from omegaconf import open_dict, OmegaConf
+
 import torch
 from torch.utils.data import Dataset, DataLoader, DistributedSampler, ConcatDataset
 from saicinpainting.training.data.aug import get_transform, get_params, get_data
-
-LOGGER = logging.getLogger(__name__)
-
-import numpy as np
 
 
 class InpaintingBiCarDataset(Dataset):
@@ -98,7 +93,6 @@ def make_default_val_dataset(indir, uid_json, kind='default', **kwargs):
             make_default_val_dataset(idir, kind=kind, **kwargs) for idir in indir 
         ])
 
-    LOGGER.info(f'Make val dataloader {kind} from {indir}')
     if '3DBiCar' in indir:
         dataset = InpaintingBiCarDataset(indir, uid_json, 'val')
     elif 'AnimatedDrawings' in indir:
