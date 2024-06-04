@@ -75,17 +75,65 @@ Then let us take the image with the uid *0dd66be9d0534b93a092d8c4c4dfd30a* as an
 python mv.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 # textured character reconstruction
 python recon.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
-# shape thinning (optional)
-python thin.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+# if shape thinning is needed, add '--thin' (optional)
+python recon.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --thin
 cd ..
 ```
 
 ## Step-3: Stylized Contour Restoration
 
-Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically. Then we can directly retarget a Mixamo motion onto the rigged character online. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline.
-### Keyframe Pair Prepration
+### Rigging & Retargeting
 
-### Training
+Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically. Then we can directly retarget a Mixamo motion onto the rigged character online. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline. 
 
-### Inference
+For convenience, here we offer an example [0dd66be9d0534b93a092d8c4c4dfd30a.zip]() and you can download it. Then run the rendering scripts:
+
+```sh
+cd dataset/AnimateDrawings/preprocessed
+# download 0dd66be9d0534b93a092d8c4c4dfd30a.zip and put it here
+unzip 0dd66be9d0534b93a092d8c4c4dfd30a.zip
+cd ../../..
+cd 3_1_animation_render
+python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+cd ..
+```
+
+Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' is used for training and the frames in 'jumping_jacks' is used for inference.
+
+```sh
+dataset
+  └── AnimateDrawings
+      └── preprocessed
+          └── 0dd66be9d0534b93a092d8c4c4dfd30a
+              ├── animation
+              │   ├── fbx_files
+              │   │   └── jumping_jacks.fbx
+              │   └── blender_render
+              │       ├── keyframe
+              │       │   ├── color
+              │       │   ├── pos
+              │       │   └── edge
+              │       └── jumping_jacks
+              │           ├── color
+              │           ├── pos
+              │           └── edge
+              ├── mesh
+              │   └── it3000-mc512-50000_cut_simpl_thin_shear.obj
+              └── char
+                  ├── texture.png
+                  └── mask.png
+
+```
+
+### Training & Inference
+
+We need to train a model for each sample. Once trained, the model can be applied directly to any new animation frames without further training.
+
+```sh
+cd 3_2_style_translator
+python train.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+python inference.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+```
+
+
 
