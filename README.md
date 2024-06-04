@@ -37,7 +37,7 @@ python setup.py develop
 
 ## Step-1: Contour Removal
 ### Download
-You can download our processed character drawings (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)) from [AnimatedDrawings.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EXwpR2S7kYlMnFIFFdYGdOYBSNUfu9tA-s2c50XfWaCTuA?e=jSGv5V) and pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
+You can download our processed character drawings from [AnimatedDrawings.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ee1Jgp-yZkRCtJPNO9Jz6HkBXYVKFR4zc_UuJpJ7i6JaIw?e=iy2iI6) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)) and pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
 ```sh
 cd DrawingSpinUp
 mkdir dataset
@@ -62,7 +62,7 @@ python predict.py
 cd ..
 ```
 ## Step-2: Textured Character Generation
-Take 0dd66be9d0534b93a092d8c4c4dfd30a as an example. You can use your own image.
+Here let us take 0dd66be9d0534b93a092d8c4c4dfd30a as an example. You can try your own image.
 
 ```sh
 cd 2_charactor_reconstructor
@@ -77,6 +77,7 @@ cd ..
 
 ## Step-3: Stylized Contour Restoration
 ### Keyframe Pair Prepration
+
 ### Training
 ### Inference
 
