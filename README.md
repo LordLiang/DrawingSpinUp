@@ -62,6 +62,7 @@ python predict.py
 cd ..
 ```
 ## Step-2: Textured Character Generation
+Firstly please download the pretrained isnet model from [isnet_dis.onnx](https://huggingface.co/stoned0651/isnet_dis.onnx/resolve/main/isnet_dis.onnx)
 Here let us take 0dd66be9d0534b93a092d8c4c4dfd30a as an example. You can try your own image.
 
 ```sh
