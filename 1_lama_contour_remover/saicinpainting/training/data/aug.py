@@ -1,6 +1,6 @@
 import random
-import io
-import cairosvg
+# import io
+# import cairosvg
 from PIL import Image
 import numpy as np
 
@@ -26,7 +26,7 @@ def read_data(img_fn, svg_fn):
     return np.array(img).astype(np.float32), np.array(sketch).astype(np.float32)
 
 
-def get_ABC(img_fn, svg_fn):
+def get_data(img_fn, svg_fn):
     img, sketch = read_data(img_fn, svg_fn)
 
     # color offset

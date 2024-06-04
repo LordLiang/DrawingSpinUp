@@ -6,9 +6,12 @@ from PIL import Image
 from omegaconf import open_dict, OmegaConf
 import torch
 from torch.utils.data import Dataset, DataLoader, DistributedSampler, ConcatDataset
-from saicinpainting.training.data.aug import get_params, get_transform, get_ABC
+from saicinpainting.training.data.aug import get_transform
+from saicinpainting.training.data.aug import get_params, get_data
 
 LOGGER = logging.getLogger(__name__)
+
+import numpy as np
 
 
 class InpaintingBiCarDataset(Dataset):
@@ -29,18 +32,19 @@ class InpaintingBiCarDataset(Dataset):
         uid = self.uids[index//6]
         img_fn = os.path.join(self.datadir, uid, 'rgba.png')
         svg_fn = os.path.join(self.datadir, uid, f"{index%6:03d}_" + 'contour0001.svg')
-        A, M, CM = get_ABC(img_fn, svg_fn)
+        img, mask, gt = get_data(img_fn, svg_fn)
 
-        # apply the same transform to A, B, C
-        transform_params = get_params(A.size, crop_size=512, load_size=572)
+        # apply the same transform
+        transform_params = get_params(img.size, crop_size=512, load_size=572)
         rgb_transform = get_transform(transform_params, num_channels=3, crop_size=512, load_size=572, no_flip=False)
         mask_transform = get_transform(transform_params, num_channels=1, crop_size=512, load_size=572, no_flip=False)
 
-        A = rgb_transform(A)
-        M = mask_transform(M)
-        CM = mask_transform(CM)
-        input = torch.cat([A, M], dim=1)
-        return dict(input=input, gt=CM)
+        img = rgb_transform(img)
+        mask = mask_transform(mask)
+        gt = mask_transform(gt)
+        input = torch.cat([img, mask], dim=0)
+
+        return dict(input=input, gt=gt)
 
 
 class InpaintingDrawingsDataset(Dataset):
@@ -56,8 +60,15 @@ class InpaintingDrawingsDataset(Dataset):
         uid = self.uids[index]
         img_fn = os.path.join(self.datadir, uid, 'char/texture.png')
         img = Image.open(img_fn)
-        rgba_transform = get_transform(num_channels=4)
-        input = rgba_transform(img)
+        mask_fn = os.path.join(self.datadir, uid, 'char/mask.png')
+        mask = Image.open(mask_fn)
+
+        rgb_transform = get_transform(num_channels=3)
+        mask_transform = get_transform(num_channels=1)
+        img = rgb_transform(img)
+        mask = mask_transform(mask)
+        input = torch.cat([img, mask], dim=0)
+        
         return dict(input=input, uid=uid)
         
 
