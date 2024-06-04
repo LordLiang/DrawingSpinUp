@@ -1,4 +1,5 @@
 # DrawingSpinUp
+
 Official code for DrawingSpinUp
 
 ## Environment Setup
@@ -11,13 +12,6 @@ Setup environment:
   - PyTorch 1.13.1
   - Cuda Toolkit 11.6
   - Ubuntu 18.04
-
-Clone this repository:
-
-```sh
-git clone https://github.com/LordLiang/DrawingSpinUp.git
-
-```
 
 Install the required packages:
 
@@ -34,39 +28,49 @@ cd python-mesh-raycast
 python setup.py develop
 ```
 
+Clone this repository and download our processed character drawings from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EWi-CdpGraRMhbqvc7Fq9k0BulcK2or_9fjaEuWVAi97Dw?e=Sj018E) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'.
+
+```sh
+git clone https://github.com/LordLiang/DrawingSpinUp.git
+cd DrawingSpinUp
+cd dataset/AnimatedDrawings
+# download preprocessed.zip and put it here
+unzip preprocessed.zip
+cd ../..
+```
 
 ## Step-1: Contour Removal
-### Download
-You can download our processed character drawings from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EWi-CdpGraRMhbqvc7Fq9k0BulcK2or_9fjaEuWVAi97Dw?e=Sj018E) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)) and pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
-```sh
-cd DrawingSpinUp
-mkdir dataset
-cd dataset/AnimatedDrawings
-# put preprocessed.zip here
-unzip preprocessed.zip
-cd ..
-cd 1_lama_contour_remover
-# put experiments.zip here
-unzip experiments.zip
-cd ..
-```
-Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'. 
+
 ### Inference
-We use [FFC-ResNet](https://github.com/advimman/lama) as backbone to predict the contour region of a given character drawing. 
+
+We use [FFC-ResNet](https://github.com/advimman/lama) as the backbone to predict the contour region of a given character drawing. 
 For model training, you can refer to the original repo.
 For training image rendering, see [1_lama_contour_remover/bicar_render_codes](1_lama_contour_remover/bicar_render_codes) which are borrowed from [Wonder3D](https://github.com/xxlong0/Wonder3D/tree/main/render_codes).
-Here we focus on inference:
+Here we focus on inference. Download our pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
+
 ```sh
 cd 1_lama_contour_remover
+# download experiments.zip and put it here
+unzip experiments.zip
 python predict.py
 cd ..
 ```
+
 ## Step-2: Textured Character Generation
-Firstly please download the pretrained isnet model from [isnet_dis.onnx](https://huggingface.co/stoned0651/isnet_dis.onnx/resolve/main/isnet_dis.onnx)
-Here let us take 0dd66be9d0534b93a092d8c4c4dfd30a as an example. You can try your own image.
+
+Firstly please download the pretrained [isnet](https://xuebinqin.github.io/dis/index.html) model ([isnet_dis.onnx](https://huggingface.co/stoned0651/isnet_dis.onnx/resolve/main/isnet_dis.onnx)) for background removal of generated multi-view images.
 
 ```sh
 cd 2_charactor_reconstructor
+mkdir dis_pretrained
+cd dis_pretrained
+wget https://huggingface.co/stoned0651/isnet_dis.onnx/resolve/main/isnet_dis.onnx
+cd ..
+```
+
+Then let us take the image with the uid *0dd66be9d0534b93a092d8c4c4dfd30a* as an example. You can try your own image.
+
+```sh
 # multi-view image generation
 python mv.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 # textured character reconstruction
@@ -77,8 +81,11 @@ cd ..
 ```
 
 ## Step-3: Stylized Contour Restoration
+
+Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically. Then we can directly retarget a Mixamo motion onto the rigged character online. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline.
 ### Keyframe Pair Prepration
 
 ### Training
+
 ### Inference
 
