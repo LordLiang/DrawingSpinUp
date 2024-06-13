@@ -86,7 +86,9 @@ cd ..
 
 Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically. Then we can directly retarget a Mixamo motion onto the rigged character online. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline. 
 
-For convenience, here we offer an example [0dd66be9d0534b93a092d8c4c4dfd30a.zip]() and you can download it. Then run the rendering scripts:
+### Frame Rendering
+
+For convenience, here we offer an example [0dd66be9d0534b93a092d8c4c4dfd30a.zip]() and you can download it. The 'animation/fbx_files/dab.fbx' and 'animation/fbx_files/jumping.fbx' are two retargeted animation files. Then we render frames by running the scripts:
 
 ```sh
 cd dataset/AnimateDrawings/preprocessed
@@ -98,7 +100,7 @@ python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 cd ..
 ```
 
-Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' is used for training and the frames in 'jumping_jacks' is used for inference.
+Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' is used for training and the frames in 'dab' is used for inference.
 
 ```sh
 dataset
@@ -107,13 +109,18 @@ dataset
           └── 0dd66be9d0534b93a092d8c4c4dfd30a
               ├── animation
               │   ├── fbx_files
-              │   │   └── jumping_jacks.fbx
+              │   │   ├── dab.fbx
+              │   │   └── jumping.fbx
               │   └── blender_render
               │       ├── keyframe
               │       │   ├── color
               │       │   ├── pos
               │       │   └── edge
-              │       └── jumping_jacks
+              │       ├── dab
+              │       │   ├── color
+              │       │   ├── pos
+              │       │   └── edge
+              │       └── jumping
               │           ├── color
               │           ├── pos
               │           └── edge
