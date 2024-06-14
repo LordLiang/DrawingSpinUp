@@ -154,7 +154,13 @@ We need to train a model for each sample. Once trained, the model can be applied
 cd 3_2_style_translator
 python train.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --pos --edge
 python inference.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --pos --edge
+cd ..
 ```
-
+If you want to generate GIF file, you can run the script:
+```sh
+cd 3_1_animation_render
+python gif_writer.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+cd ..
+```
 
 
