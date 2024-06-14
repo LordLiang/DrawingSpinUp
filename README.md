@@ -106,11 +106,14 @@ cd dataset/AnimateDrawings/preprocessed
 unzip 0dd66be9d0534b93a092d8c4c4dfd30a.zip
 cd ../../..
 cd 3_1_animation_render
+# render keyframe pair for training
+python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --keyframe
+# render frames for inference
 python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 cd ..
 ```
 
-Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'rest_pose' is used for training and the frames in 'dab' and 'jumping' is used for inference.
+Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' is used for training and the frames in 'dab' and 'jumping' is used for inference.
 
 ```sh
 dataset
@@ -123,7 +126,7 @@ dataset
               │   │   ├── dab.fbx
               │   │   └── jumping.fbx
               │   └── blender_render
-              │       ├── rest_pose
+              │       ├── keyframe
               │       │   ├── color
               │       │   ├── pos
               │       │   └── edge
