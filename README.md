@@ -113,7 +113,7 @@ python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 cd ..
 ```
 
-Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' is used for training and the frames in 'dab' and 'jumping' is used for inference.
+Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' are used for training and the frames in 'dab' and 'jumping' are used for inference.
 
 ```sh
 dataset
