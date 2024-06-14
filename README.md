@@ -153,7 +153,7 @@ We need to train a model for each sample. Once trained, the model can be applied
 ```sh
 cd 3_2_style_translator
 python train.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --pos --edge
-python inference.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+python inference.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --pos --edge
 ```
 
 
