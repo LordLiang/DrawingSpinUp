@@ -19,7 +19,7 @@ def build_model(model_type, args, device):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--type', help='traning type', default='ric')
-    parser.add_argument('--uid', help='uid of sample', default='ff7ab74a67a443e3bda61e69577f4e80')
+    parser.add_argument('--uid', help='uid of sample', default='0dd66be9d0534b93a092d8c4c4dfd30a')
     parser.add_argument('--pos', action='store_true', help='use dense corresponding')
     parser.add_argument('--edge', action='store_true', help='use edge information')
     parser.add_argument('--checkpoint_id', type=int, help='checkpoint id', default=99999)
