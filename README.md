@@ -82,8 +82,6 @@ Then let us take the image with the uid *0dd66be9d0534b93a092d8c4c4dfd30a* as an
 python mv.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 # textured character reconstruction
 python recon.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
-# if shape thinning is needed, add '--thin' (optional)
-python recon.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --thin
 cd ..
 ```
 
@@ -139,7 +137,7 @@ dataset
               │           ├── pos
               │           └── edge
               ├── mesh
-              │   └── it3000-mc512-50000_cut_simpl_thin_shear.obj
+              │   └── it3000-mc512-50000_cut_simpl.obj
               └── char
                   ├── texture.png
                   └── mask.png
