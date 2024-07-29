@@ -1,6 +1,6 @@
 # DrawingSpinUp
 
-Official code for DrawingSpinUp
+(SIGGRAPH Asia 2024) This is the official PyTorch implementation of SIGGRAPH Asia 2024 paper: [DrawingSpinUp: 3D Animation from Single Character Drawings](https://drawingspinup.github.io/).
 
 ## Environment Setup
 
