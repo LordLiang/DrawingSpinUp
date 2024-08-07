@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B9N9911MNC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B9N9911MNC');
+  </script>
+  
+  <meta charset="utf-8">
+  <meta name="description"
+        content="DrawingSpinUp: 3D Animation from Single Character Drawings">
+  <meta name="keywords" content="Character Drawing, 3D Animation, Non-photorealistic Rendering, Style Transfer">
+  <meta name="viewport" content="width=device-width, initial-scale=0.1">
+  <title>DrawingSpinUp: 3D Animation from Single Character Drawings</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-tooltip.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!--Title block-->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop" id="top">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">DrawingSpinUp: 3D Animation from <br>Single Character Drawings</h1>
+          <div class="is-size-3 publication-authors"><span class="author-block">Anonymous author(s)</span></div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="coming soon" target="_blank" class="external-link button is-normal is-rounded">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="coming soon" target="_blank" class="external-link button is-normal is-rounded">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Github Link. -->
+              <span class="link-block">
+                <a href="coming soon" target="_blank" class="external-link button is-normal is-rounded">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+          
+          <div class="columns is-centered has-text-centered is-variable is-8">
+          <div class="column is-centered has-text-centered">
+            <div class="section-links ">
+              <span class="link-block">
+                <a href="#gallery" class="nav-link button-55 is-normal">
+                  <span>Gallery</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#comparisons" class="nav-link button-55 is-normal">
+                  <span>Comparisons</span>
+                </a>
+              </span>
+              
+              <span class="link-block">
+                <a href="#ablation" class="nav-link button-55 is-normal">
+                  <span>Ablation</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="#limitations" class="nav-link button-55 is-normal">
+                  <span>Limitations</span>
+                </a>
+              </span> -->
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Teaser-->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+      <div class="item">
+        <img id="teaser" src="static/images/teaser/fig_teaser.png"/>
+      </div>
+  </div>
+</section>
+
+<!-- Abstract. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+        <p>
+          Animating various character drawings is an engaging visual content creation task. 
+          Given a single character drawing, existing animation methods are limited to flat 2D motions and thus lack 3D effects. 
+          An alternative solution is to reconstruct a 3D model from a character drawing as a proxy and then retarget 3D motion data onto it. 
+          However, the existing image-to-3D methods could not work well for amateur character drawings in terms of appearance and geometry. 
+          We observe the contour lines, commonly existing in character drawings, would introduce significant ambiguity in texture synthesis due to their view-dependence. 
+          Additionally, thin regions represented by single-line contours are difficult to reconstruct (e.g., slim limbs of a stick figure) due to their delicate structures. 
+          To address these issues, we propose a novel system, DrawingSpinUp, to produce plausible 3D animations and breathe life into character drawings, 
+          allowing them to freely spin up, leap, and even perform a hip-hop dance. 
+          For appearance improvement, we adopt a removal-then-restoration strategy to first remove the view-dependent contour lines and then render them back after retargeting the reconstructed character. 
+          For geometry refinement, we develop a skeleton-based thinning deformation algorithm to refine the slim structures represented by the single-line contours. 
+          The experimental evaluations show that our method outperforms the existing 2D and 3D animation methods and generates high-quality 3D animations from single character drawings.
+        </p>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method -->
+<section class="section hero is-light">
+<div class="container is-max-desktop">
+  <div class="section-title has-text-centered is-centered">
+    <h2 class="title is-3">Method</h2><br>
+  </div>
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-centered has-text-centered">
+      <img id="pipeline" src="static/images/method/fig_pipeline.png"/>
+    </div>
+  </div>  
+</div>
+</section>
+
+<!--Gallery-->
+<section class="section">
+  <div class="container is-widescreen" id="gallery">
+    <div class="link-block ">
+      <a href="#top" class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+      </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">Gallery</h2><br>
+    </div>
+    <div class="section is-centered has-text-centered">
+    <div class="captioned_video">
+     <span style="display:-moz-inline-box; display:inline-block; width:125px">Input Drawings</span>
+     <img class="comp_src_img" src="results/gallery/0a4ff03c912a4e5487e74e05423f3c6d/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/0b39d3ae37ee430dbe721cdcc40e270c/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/1f1654afb5aa4f8daa5db9a96351c226/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/3bf7b19b49a241b38c2e4334392ac322/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/00cea1b84158456ba484c25532b7c153/texture.png" style="border: 1px dashed grey;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">Rest Rotation</span>
+      <img class="comp_src_img" src="results/gallery/0a4ff03c912a4e5487e74e05423f3c6d/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/0b39d3ae37ee430dbe721cdcc40e270c/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/1f1654afb5aa4f8daa5db9a96351c226/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/3bf7b19b49a241b38c2e4334392ac322/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/00cea1b84158456ba484c25532b7c153/rest_rotate_res_stage2.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">Animation</span>
+      <img class="comp_src_img" src="results/gallery/0a4ff03c912a4e5487e74e05423f3c6d/walking_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/0b39d3ae37ee430dbe721cdcc40e270c/rumba_dancing_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/1f1654afb5aa4f8daa5db9a96351c226/drunk_walk_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/3bf7b19b49a241b38c2e4334392ac322/jogging_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/00cea1b84158456ba484c25532b7c153/breakdance_1990_res_stage2.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+    <span style="display:-moz-inline-box; display:inline-block; width:125px">Input Drawings</span>
+    <img class="comp_src_img" src="results/gallery/14bdc5f49d504d1cb775e89685ffc339/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/b03fed9c34f64114a62c7a963fa804e5/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/093acb741fa54734825c32c4b5cb614a/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/e78285dbf83146b7935c428c2f58585c/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/gallery/d12bed5708ed42f2b615b7911c0291fa/texture.png" style="border: 1px dashed grey;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">Rest Rotation</span>
+      <img class="comp_src_img" src="results/gallery/14bdc5f49d504d1cb775e89685ffc339/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/b03fed9c34f64114a62c7a963fa804e5/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/093acb741fa54734825c32c4b5cb614a/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/e78285dbf83146b7935c428c2f58585c/rest_rotate_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/d12bed5708ed42f2b615b7911c0291fa/rest_rotate_res_stage2.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">Animation</span>
+      <img class="comp_src_img" src="results/gallery/14bdc5f49d504d1cb775e89685ffc339/jumping_jacks_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/b03fed9c34f64114a62c7a963fa804e5/hip_hop_dancing_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/093acb741fa54734825c32c4b5cb614a/booty_hip_hop_dance_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/e78285dbf83146b7935c428c2f58585c/telling_a_secret_res_stage2.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/gallery/d12bed5708ed42f2b615b7911c0291fa/wave_hello_res_stage2.gif" style="border: none;"/>
+    </div>
+    </div>
+  </div>
+</section>
+  
+<!-- Comparisons -->
+<section class="section">
+  <div class="container is-widescreen" id="comparisons">
+    <div class="link-block ">
+      <a href="#top" class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+      </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">Comparisons to Prior Work</h2><br>
+    </div>
+  <div class="section is-centered has-text-centered">
+    <h2 class="title is-6">Comparison-1: We compare our method to a 2D-based animation method: Smith et al. [2023].</h2><br>
+    <div class="captioned_video">
+     <span style="display:-moz-inline-box; display:inline-block; width:125px">Input Drawings</span>
+     <img class="comp_src_img" src="results/input_drawings/ff7ab74a67a443e3bda61e69577f4e80/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/0dd66be9d0534b93a092d8c4c4dfd30a/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/8f865188db3245ee889754f42f898e2d/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/94adf4679db341b78b9d16180949b932/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/ea76e394268a4889a59193a6864897eb/texture.png" style="border: 1px dashed grey;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">3D Motions</span>
+      <img class="comp_src_img" src="results/motions/jumping.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/motions/dab.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/motions/jesse_dance.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/motions/jumping_jacks.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/motions/zombie.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">Smith et al.</span>
+      <img class="comp_src_img" src="results/comparisons/2d/ff7ab74a67a443e3bda61e69577f4e80/smith/jumping_cropped.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/2d/0dd66be9d0534b93a092d8c4c4dfd30a/smith/dab_cropped.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/2d/8f865188db3245ee889754f42f898e2d/smith/jesse_dance_cropped.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/2d/94adf4679db341b78b9d16180949b932/smith/jumping_jacks_cropped.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/2d/ea76e394268a4889a59193a6864897eb/smith/zombie_cropped.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+     <span style="display:-moz-inline-box; display:inline-block; width:125px">Ours</span>
+     <img class="comp_src_img" src="results/comparisons/2d/ff7ab74a67a443e3bda61e69577f4e80/ours/jumping_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/2d/0dd66be9d0534b93a092d8c4c4dfd30a/ours/dab_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/2d/8f865188db3245ee889754f42f898e2d/ours/jesse_dance_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/2d/94adf4679db341b78b9d16180949b932/ours/jumping_jacks_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/2d/ea76e394268a4889a59193a6864897eb/ours/zombie_res_stage2.gif" style="border: none;"/>
+    </div>
+  </div>
+  <div class="section is-centered has-text-centered">
+    <h2 class="title is-6">Comparison-2: We compare our method to other 3D-based animation methods: DreamGaussian [2023] and Wonder3D [2023].</h2><br>
+    <div class="captioned_video">
+     <span style="display:-moz-inline-box; display:inline-block; width:125px">Input Drawings</span>
+     <img class="comp_src_img" src="results/input_drawings/0a614ae4e45c424880aab5ff92056c08/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/f66f34207e6a407cb4dcdb119502543e/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/c84f0a34dc5c4723a208232b7015c8f7/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/0dda7d88a969450087911a526cd4b094/texture.png" style="border: 1px dashed grey;"/>
+     <img class="comp_src_img" src="results/input_drawings/257e97a155a044389aa9a5011ee97436/texture.png" style="border: 1px dashed grey;"/>
+    </div>
+    <div class="captioned_video">
+     <span style="display:-moz-inline-box; display:inline-block; width:125px">DreamGaussian</span>
+     <img class="comp_src_img" src="results/comparisons/3d/0a614ae4e45c424880aab5ff92056c08/dg/breakdance_ending_1_color.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/f66f34207e6a407cb4dcdb119502543e/dg/shoved_reaction_with_spin_color.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/c84f0a34dc5c4723a208232b7015c8f7/dg/meia_lua_de_compasso_color.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/0dda7d88a969450087911a526cd4b094/dg/northern_soul_spin_color.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/257e97a155a044389aa9a5011ee97436/dg/flair_color.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+      <span style="display:-moz-inline-box; display:inline-block; width:125px">Wonder3D</span>
+      <img class="comp_src_img" src="results/comparisons/3d/0a614ae4e45c424880aab5ff92056c08/w3/breakdance_ending_1_color.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/3d/f66f34207e6a407cb4dcdb119502543e/w3/shoved_reaction_with_spin_color.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/3d/c84f0a34dc5c4723a208232b7015c8f7/w3/meia_lua_de_compasso_color.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/3d/0dda7d88a969450087911a526cd4b094/w3/northern_soul_spin_color.gif" style="border: none;"/>
+      <img class="comp_src_img" src="results/comparisons/3d/257e97a155a044389aa9a5011ee97436/w3/flair_color.gif" style="border: none;"/>
+    </div>
+    <div class="captioned_video">
+     <span style="display:-moz-inline-box; display:inline-block; width:125px">Ours</span>
+     <img class="comp_src_img" src="results/comparisons/3d/0a614ae4e45c424880aab5ff92056c08/ours/breakdance_ending_1_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/f66f34207e6a407cb4dcdb119502543e/ours/shoved_reaction_with_spin_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/c84f0a34dc5c4723a208232b7015c8f7/ours/meia_lua_de_compasso_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/0dda7d88a969450087911a526cd4b094/ours/northern_soul_spin_res_stage2.gif" style="border: none;"/>
+     <img class="comp_src_img" src="results/comparisons/3d/257e97a155a044389aa9a5011ee97436/ours/flair_res_stage2.gif" style="border: none;"/>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- Ablation -->
+
+<section class="section">
+  <div class="container is-widescreen" id="ablation">
+    <div class="link-block ">
+      <a href="#top" class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+      </a>
+    </div>
+    <h2 class="title is-3 has-text-centered is-centered">Ablation</h2><br>
+  </div>
+  <div class="columns is-centered has-text-centered">
+    <div class="column has-text-centered">
+      <h2 class="title is-5">(a) Contour Removal</h2>
+      <img src="static/images/ablation/fig_ab1.png" width="45%"/>
+      <div class="title is-6 content has-text-centered">
+        Comparison between without (Top) and with (Bottom) contour removal.
+      </div>
+    </div>
+</div>
+<div class="columns is-centered has-text-centered">
+    <div class="column has-text-centered">
+      <br><h2 class="title is-5">(b) Shape Refinement</h2>
+      <img src="static/images/ablation/fig_ab2.png" width="48%"/>
+        <div class="title is-6 content has-text-centered">
+          Comparison of three scenarios: no-cut-no-thin (Top), only-cut (Middle), and cut-and-thin (Bottom).
+        </div>
+    </div> 
+</div>
+<div class="columns is-centered has-text-centered">
+    <div class="column has-text-centered">
+      <br><h2 class="title is-5">(c) Rotation-Invariant Convolution</h2>
+      <img src="static/images/ablation/fig_ab3.png" width="60%"/>
+        <div class="title is-6 content has-text-centered">
+          Comparison between without (Top) and with (Bottom) rotation-invariant convolution.
+        </div>
+    </div> 
+</div>
+</section>
+
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{drawingspinup,
+        title={DrawingSpinUp: 3D Animation from Single Character Drawings}, 
+        author={Anonymous author(s)},
+        year={2024},
+        eprint={xxxx.xxxx},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV}
+      }
+      </code></pre>
+    </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="coming soon">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="coming soon" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://livesketch.github.io/"> LiveSketch</a> project page. If you want to reuse their <a
+              href="https://github.com/LiveSketch/livesketch.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
