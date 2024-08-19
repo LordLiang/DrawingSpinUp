@@ -2,7 +2,7 @@
 
 (SIGGRAPH Asia 2024) This is the official PyTorch implementation of SIGGRAPH Asia 2024 paper: [DrawingSpinUp: 3D Animation from Single Character Drawings](https://lordliang.github.io/DrawingSpinUp/).
 
-## NOTE: The code is being organized, and the final version will be uploaded before 2024/9/12!!!
+## NOTE: The paper is currently under revision and will be released on arXiv on September 12, 2024. The code is being organized, and the final version will be uploaded before on September 12, 2024.
 
 ## Environment Setup
 
