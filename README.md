@@ -105,44 +105,47 @@ cd dataset/AnimateDrawings/preprocessed
 # download 0dd66be9d0534b93a092d8c4c4dfd30a.zip and put it here
 unzip 0dd66be9d0534b93a092d8c4c4dfd30a.zip
 cd ../../..
-cd 3_1_animation_render
+cd 3_animation_render
+export DISPLAY=:1
 # render keyframe pair for training
-python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --keyframe
+python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --train
 # render frames for inference
-python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+python run_render.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --infer
 cd ..
 ```
 
-Then you can get the rendered frames in 'animation/blender_render' folder. The frames in 'keyframe' are used for training and the frames in 'dab' and 'jumping' are used for inference.
+Then you can get the rendered frames in 'mesh/blender_render' folder. The frames in 'rest_pose' are used for training and the frames in 'dab' and 'jumping' are used for inference.
 
 ```sh
 dataset
   └── AnimateDrawings
       └── preprocessed
           └── 0dd66be9d0534b93a092d8c4c4dfd30a
-              ├── animation
+              ├── mesh
               │   ├── fbx_files
               │   │   ├── rest_pose.fbx
               │   │   ├── dab.fbx
               │   │   └── jumping.fbx
-              │   └── blender_render
-              │       ├── keyframe
-              │       │   ├── color
-              │       │   ├── pos
-              │       │   └── edge
-              │       ├── dab
-              │       │   ├── color
-              │       │   ├── pos
-              │       │   └── edge
-              │       └── jumping
-              │           ├── color
-              │           ├── pos
-              │           └── edge
-              ├── mesh
-              │   └── it3000-mc512-50000_cut_simpl.obj
+              │   ├── blender_render
+              │   │   ├── rest_pose
+              │   │   │   ├── color
+              │   │   │   ├── pos
+              │   │   │   └── edge
+              │   │   ├── dab
+              │   │   │   ├── color
+              │   │   │   ├── pos
+              │   │   │   └── edge
+              │   │   └── jumping
+              │   │       ├── color
+              │   │       ├── pos
+              │   │       └── edge
+              │   ├── it3000-mc512-f50000_c_r_t_s_cbp.obj
+              │   └── thinning_cache
               └── char
+                  ├── ffc_resnet_inpainted.png
+                  ├── mask.png
                   ├── texture.png
-                  └── mask.png
+                  └── texture_with_bg.png
 
 ```
 
@@ -151,11 +154,15 @@ dataset
 We need to train a model for each sample. Once trained, the model can be applied directly to any new animation frames without further training.
 
 ```sh
-cd 3_2_style_translator
-# training
-python train.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --pos --edge
-# inference
-python test.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a --pos --edge
+cd 4_style_translator
+# stage1 training
+python train_stage1.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+# stage1 inference
+python test_stage1.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+# stage2 training
+python train_stage2.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
+# stage2 inference
+python test_stage2.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 # if you want to generate GIF file, you can run the script:
 python gif_writer.py --uid 0dd66be9d0534b93a092d8c4c4dfd30a
 cd ..
