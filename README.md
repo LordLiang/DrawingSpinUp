@@ -30,7 +30,7 @@ cd python-mesh-raycast
 python setup.py develop
 ```
 
-Clone this repository and download our processed character drawings from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EWi-CdpGraRMhbqvc7Fq9k0BulcK2or_9fjaEuWVAi97Dw?e=Sj018E) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'.
+Clone this repository and download our processed character drawings and reconstructed 3D characters from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EbR1lDtb_qZJn27tUAHn2SUBXzvDWuAlcEfzeaiEURwKTg?e=xQJLFb) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'.
 
 ```sh
 git clone https://github.com/LordLiang/DrawingSpinUp.git
