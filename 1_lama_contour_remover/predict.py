@@ -59,18 +59,12 @@ def predict(config_path):
 
         predicted = batch['predicted'][0][0].detach().cpu().numpy()
         predicted = np.clip((predicted>0.2)*255, 0, 255).astype('uint8')  
-        predicted_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_contour.png')
-        cv2.imwrite(predicted_path, predicted)
 
-        inpait_mask = np.maximum(predicted, 255-alpha[:,:,0]).astype(np.uint8)
-
-        inpainted = cv2.inpaint(img, inpait_mask, 3, cv2.INPAINT_TELEA)
-        inpainted_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_inpainted_0.png')
-        cv2.imwrite(inpainted_path, cv2.cvtColor(inpainted, cv2.COLOR_BGR2RGB))
-        inpainted_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_inpainted.png')
-        inpainted = inpainted * mask + 255 * (1-mask)
-        inpainted = np.concatenate((inpainted, alpha), 2)
-        cv2.imwrite(inpainted_path, cv2.cvtColor(inpainted, cv2.COLOR_BGRA2RGBA))
+        inpaint_mask = np.maximum(predicted, 255-alpha[:,:,0]).astype(np.uint8)
+        inpainted = cv2.inpaint(img, inpaint_mask, 3, cv2.INPAINT_TELEA)
+        tmp_path = os.path.join(predict_config.indir, batch['uid'][0], 'char/'+save_name+'_inpainted.png')
+        tmp = np.concatenate((inpainted, alpha), 2)
+        cv2.imwrite(tmp_path, cv2.cvtColor(tmp, cv2.COLOR_BGRA2RGBA))
 
 
 if __name__ == '__main__':

@@ -46,6 +46,7 @@ class InpaintingDrawingsDataset(Dataset):
         self.datadir = datadir
         with open(uid_json) as f:
             self.uids = json.load(f)
+            self.uids.remove('00d9710f5e9d438db188d78b64b4a1f4')
 
     def __len__(self):
         return len(self.uids)
@@ -54,14 +55,20 @@ class InpaintingDrawingsDataset(Dataset):
         uid = self.uids[index]
         img_fn = os.path.join(self.datadir, uid, 'char/texture.png')
         img = Image.open(img_fn)
-        mask_fn = os.path.join(self.datadir, uid, 'char/mask.png')
-        mask = Image.open(mask_fn)
+        rgb_img = Image.new('RGB', img.size, (255, 255, 255))
+        rgb_img.paste(img, (0, 0), img)
 
+        if img.mode == 'RGBA':
+            mask = img.split()[-1]
+        else:
+            mask_fn = os.path.join(self.datadir, uid, 'char/mask.png')
+            mask = Image.open(mask_fn)
+        
         rgb_transform = get_transform(num_channels=3)
         mask_transform = get_transform(num_channels=1)
-        img = rgb_transform(img)
+        rgb_img = rgb_transform(rgb_img)
         mask = mask_transform(mask)
-        input = torch.cat([img, mask], dim=0)
+        input = torch.cat([rgb_img, mask], dim=0)
         
         return dict(input=input, uid=uid)
         
