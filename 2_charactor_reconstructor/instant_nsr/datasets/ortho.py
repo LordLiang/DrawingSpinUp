@@ -17,7 +17,6 @@ from instant_nsr.utils.misc import get_rank
 def camNormal2worldNormal(rot_c2w, camNormal):
     H,W,_ = camNormal.shape
     normal_img = np.matmul(rot_c2w[None, :, :], camNormal.reshape(-1,3)[:, :, None]).reshape([H, W, 3])
-
     return normal_img
 
 
@@ -32,14 +31,10 @@ def normal2img(normal):
 def RT_opengl2opencv(RT):
     R = RT[:3, :3]
     t = RT[:3, 3]
-
     R_bcam2cv = np.asarray([[1, 0, 0], [0, -1, 0], [0, 0, -1]], np.float32)
-
     R_world2cv = R_bcam2cv @ R
     t_world2cv = R_bcam2cv @ t
-
     RT = np.concatenate([R_world2cv,t_world2cv[:,None]],1)
-
     return RT
 
 
@@ -47,19 +42,16 @@ def normal_opengl2opencv(normal):
     H,W,C = np.shape(normal)
     R_bcam2cv = np.array([1, -1, -1], np.float32)
     normal_cv = normal * R_bcam2cv[None, None, :]
-
     return normal_cv
 
 
 def inv_RT(RT):
     RT_h = np.concatenate([RT, np.array([[0,0,0,1]])], axis=0)
     RT_inv = np.linalg.inv(RT_h)
-
     return RT_inv[:3, :]
 
 
 def load_a_prediction(mv_dir, imSize, view_types, cam_pose_dir=None, normal_system='front'):
-
     all_images = []
     all_normals = []
     all_normals_world = []
@@ -118,9 +110,22 @@ class OrthoDatasetBase():
         self.h = self.img_wh[1]
         self.has_mask = True
 
-        self.view_types = ['front', 'front_right', 'right', 'back', 'left', 'front_left']
-        view_weights = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-        
+        if self.config.uid in ['025dc91b146d4f57bd114e07165ff7bd',
+                               'b03fed9c34f64114a62c7a963fa804e5',
+                               'e91d8a6d3aa444f9b10f3a14a6e0a287'
+                               ]:
+            self.view_types = ['front', 'back']
+            view_weights = [1.0, 1.0]
+        elif self.config.uid in ['b32e37e2f0354f569ea9265d753891f7',
+                                 'b718c3fb937a416b9fe49ff984a1504e',
+                                 'd12bed5708ed42f2b615b7911c0291fa',
+                                 'd2f443e21595431f9f2cd580f291f51b']:
+            self.view_types = ['front', 'front_right', 'back', 'front_left']
+            view_weights = [1.0, 1.0, 1.0, 1.0]
+        else:
+            self.view_types = ['front', 'front_right', 'right', 'back', 'left', 'front_left']
+            view_weights = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
         self.view_weights = torch.from_numpy(np.array(view_weights)).float().to(self.rank).view(-1)
         self.view_weights = self.view_weights.view(-1,1,1).repeat(1, self.h, self.w)
         self.cam_pose_dir = self.config.cam_pose_dir
@@ -145,9 +150,12 @@ class OrthoDatasetBase():
         self.all_images = torch.from_numpy(self.images_np) / 255.
         self.all_images = self.all_images.float().to(self.rank)
     
-        front_mask_filepath = os.path.join(self.root_dir, 'char/mask.png')
-        self.front_mask = cv2.imread(front_mask_filepath, 0)
-        self.front_mask = cv2.rotate(self.front_mask, cv2.ROTATE_90_CLOCKWISE)
+        if self.config.load_front_mask:
+            front_mask_filepath = os.path.join(self.root_dir, 'char/mask.png')
+            self.front_mask = cv2.imread(front_mask_filepath, 0)
+            self.front_mask = cv2.rotate(self.front_mask, cv2.ROTATE_90_CLOCKWISE)
+        else:
+            self.front_mask = None
         
 
 class OrthoDataset(Dataset, OrthoDatasetBase):

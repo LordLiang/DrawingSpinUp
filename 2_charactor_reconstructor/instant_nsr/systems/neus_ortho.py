@@ -5,7 +5,7 @@ from instant_nsr import systems
 from instant_nsr.models.ray_utils import get_ortho_rays
 from instant_nsr.systems.base import BaseSystem
 from instant_nsr.systems.criterions import binary_cross_entropy, ranking_loss
-from instant_nsr.utils.post_processing import save_mesh
+from instant_nsr.utils.mesh_utils import save_mesh
 
 
 @systems.register('ortho-neus-system')
@@ -99,7 +99,7 @@ class OrthoNeuSSystem(BaseSystem):
 
         loss_rgb_l1 = F.l1_loss(out['comp_rgb'][mask], batch['rgb'][mask], reduction='none')
         loss_rgb_l1 = ranking_loss(loss_rgb_l1.sum(dim=1),
-                                    penalize_ratio=0.8)
+                                    penalize_ratio=self.config.system.loss.rgb_p_ratio)
         self.log('train/loss_rgb', loss_rgb_l1)
         loss += loss_rgb_l1 * self.C(self.config.system.loss.lambda_rgb_l1)    
 
@@ -180,13 +180,17 @@ class OrthoNeuSSystem(BaseSystem):
             self.export()
     
     def export(self):
-        save_name = f"it{self.global_step}-{self.config.model.geometry.isosurface.method}{self.config.model.geometry.isosurface.resolution}-{self.config.model.geometry.face_count}"
+        save_name = f"it{self.global_step}-{self.config.model.geometry.isosurface.method}{self.config.model.geometry.isosurface.resolution}-f{self.config.model.geometry.face_count}"
         if self.config.model.geometry.front_cutting:
-            save_name += '_cut'
-        if self.config.model.geometry.mesh_simplify:
-            save_name += '_simpl' 
-        if not self.config.export.vertex_coloring:
-            save_name += '_mlp'
+            save_name += '_c'
+        if self.config.model.geometry.remeshing:
+            save_name += '_r' 
+        if self.config.export.thinning:
+            save_name += '_t' 
+        if self.config.export.smoothing:
+            save_name += '_s' 
+        if self.config.export.color_back_projection:
+            save_name += '_cbp'
         self.config.export.save_name = save_name
         self.config.export.input_dir = self.config.dataset.input_dir
         mesh = self.model.export(self.config.export, self.dataset.front_mask)

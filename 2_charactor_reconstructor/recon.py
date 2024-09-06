@@ -22,7 +22,11 @@ def load_config(*yaml_files, cli_args=[]):
     return conf
 
 
-def run_pipeline(config):
+def recon(uid, config):
+    config.dataset.uid = uid
+    config.dataset.input_dir = os.path.join(config.dataset.data_root, uid, 'mv')
+    config.export.output_dir = os.path.join(config.dataset.data_root, uid, 'mesh')
+    config.dataset.load_front_mask = config.model.geometry.front_cutting
     pl.seed_everything(config.seed)
     dm = datasets.make(config.dataset.name, config.dataset)
     system = systems.make(config.system.name, config)
@@ -42,32 +46,21 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='reconstruction')
     parser.add_argument('--config', default='./configs/neuralangelo-ortho-wmask.yaml')
     parser.add_argument('--uid', default='0dd66be9d0534b93a092d8c4c4dfd30a', help='image uid')
-    parser.add_argument('--mv_folder', default='mv', help='mv folder')
-    parser.add_argument('--save_folder', default='mesh', help='save folder')
     parser.add_argument('--all', action='store_true', help='process all examples')
-    parser.add_argument('--no_front_cut', action='store_true', help='disable front cut')
-    parser.add_argument('--no_simplify', action='store_true', help='disable mesh simplification')
-    parser.add_argument('--no_vertex_coloring', action='store_true', help='disable vertex coloring')
-    parser.add_argument('--thin', action='store_true', help='enable thinning')
-    parser.add_argument('--no_shear', action='store_true', help='disable shear')
     args = parser.parse_args()
-
     config = load_config(args.config)
-    config.model.geometry.front_cutting = not args.no_front_cut
-    config.model.geometry.mesh_simplify = not args.no_simplify
-    config.export.vertex_coloring = not args.no_vertex_coloring
-    config.export.thin = args.thin
-    config.export.shear = not args.no_shear
+
+    with open(config.dataset.thinning_uid_list_file) as f:
+        thinning_uids = json.load(f)
     
     if args.all:
-        with open(config.uid_list_file) as f:
+        with open(config.dataset.uid_list_file) as f:
             all_uids = json.load(f)
         for uid in all_uids:
-            config.dataset.input_dir = os.path.join(config.data_root, uid, args.mv_folder)
-            config.export.output_dir = os.path.join(config.data_root, uid, args.save_folder)
-            run_pipeline(config)
+            if not uid in thinning_uids:
+                config.export.thinning = False
+            recon(uid, config)
     else:
-        config.dataset.input_dir = os.path.join(config.data_root, args.uid, args.mv_folder)
-        config.export.output_dir = os.path.join(config.data_root, args.uid, args.save_folder)
-        run_pipeline(config) 
-
+        if not args.uid in thinning_uids:
+            config.export.thinning = False
+        recon(args.uid, config) 

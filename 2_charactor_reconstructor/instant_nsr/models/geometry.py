@@ -11,7 +11,7 @@ from instant_nsr import models
 from instant_nsr.models.base import BaseModel
 from instant_nsr.models.utils import scale_anything, get_activation, cleanup, chunk_batch
 from instant_nsr.models.network_utils import get_encoding, get_mlp
-from instant_nsr.utils.post_processing import clean_mesh
+from instant_nsr.utils.mesh_utils import remesh
 from instant_nsr.systems.utils import update_module_step
 
 
@@ -34,7 +34,7 @@ class MarchingCubeHelper(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.resolution = config.isosurface.resolution
-        self.mesh_simplify = config.mesh_simplify
+        self.remeshing = config.remeshing
         self.face_count = config.face_count
         self.points_range = (0, 1)
         self.verts = None
@@ -52,17 +52,16 @@ class MarchingCubeHelper(nn.Module):
         if front_mask is not None:
             front_mask = cv2.resize(front_mask, (self.resolution, self.resolution), interpolation=cv2.INTER_CUBIC)
             front_mask = np.tile(front_mask[:, None ,:], (1, self.resolution, 1))
-            binary_value = (level.numpy() <= 0) * (front_mask > 255*0.2)
+            binary_value = (level.numpy() <= 0) * (front_mask > 127)
             value = mcubes.smooth(binary_value)
         else:
-            # value = -level.numpy()
             binary_value = level.numpy() <= 0
             value = mcubes.smooth(binary_value)
 
         verts, faces = mcubes.marching_cubes(value, threshold)
         verts = verts / (self.resolution - 1.)
-        if fine_stage and self.mesh_simplify:
-                verts, faces = clean_mesh(verts, faces, self.face_count)
+        if fine_stage and self.remeshing:
+                verts, faces = remesh(verts, faces, self.face_count)
 
         return {
             'verts': torch.from_numpy(verts),

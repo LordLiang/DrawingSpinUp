@@ -221,7 +221,7 @@ class NeuSModelTextureMLP(BaseModel):
     def export(self, export_config, front_mask=None):
         mesh = self.isosurface(front_mask)
 
-        if not export_config.vertex_coloring:
+        if not export_config.color_back_projection:
             _, sdf_grad, feature = chunk_batch(self.geometry, 
                                             export_config.chunk_size, 
                                             False, 

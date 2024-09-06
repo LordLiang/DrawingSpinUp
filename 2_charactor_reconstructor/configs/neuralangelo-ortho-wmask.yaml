@@ -1,19 +1,22 @@
 seed: 123456
-data_root: '../dataset/AnimatedDrawings/preprocessed'
-uid_list_file: '../dataset/AnimatedDrawings/drawings_uids.json'
 
 dataset:
   name: ortho
   cam_pose_dir: ./instant_nsr/datasets/fixed_poses
   imSize: [1024, 1024]
+  data_root: '../dataset/AnimatedDrawings/preprocessed'
+  uid_list_file: '../dataset/AnimatedDrawings/drawings_uids.json'
+  thinning_uid_list_file: '../dataset/AnimatedDrawings/drawings_uids_thinning.json'
+  load_front_mask: True
 
 export:
   chunk_size: 2097152
-  vertex_coloring: True
   ortho_scale: 1.35   #modify
-  thin: False
-  thin_type: 'double'
-  shear: True
+  thinning: True
+  smoothing: True
+  thinning_type: 'double'
+  shearing: True
+  color_back_projection: True
   export_uv: False
   
 model:
@@ -39,7 +42,7 @@ model:
     grad_type: finite_difference
     finite_difference_eps: progressive
     front_cutting: True
-    mesh_simplify: True
+    remeshing: True
     face_count: 50000
     isosurface:
       method: mc

@@ -3,6 +3,7 @@ pretrained_model_name_or_path: 'flamehaze1115/wonder3d-v1.0' # or './ckpts'
 data_root: '../dataset/AnimatedDrawings/preprocessed'
 uid_list_file: '../dataset/AnimatedDrawings/drawings_uids.json'
 views: ['front', 'front_right', 'right', 'back', 'left', 'front_left']
+resolution: [1024, 1024]
 
 validation_dataset:
   num_views: 6

@@ -28,7 +28,7 @@ def load_config(*yaml_files, cli_args=[]):
 
 def load_wonder3d_pipeline(config):
     pipeline = DiffusionPipeline.from_pretrained(
-    config.pretrained_model_name_or_path, # or use local checkpoint './ckpts'
+    config.pretrained_model_name_or_path,
     custom_pipeline='flamehaze1115/wonder3d-pipeline',
     torch_dtype=weight_dtype
     )
@@ -49,7 +49,18 @@ def tensor2pil(tensor):
     return Image.fromarray(ndarr)
 
 
-def run_pipeline(pipeline, config, single_image, write_image=True):
+def mv(uid, pipeline, config, write_image=True):
+    print(uid)
+    config.output_dir = os.path.join(config.data_root, uid, args.save_folder)
+    img_fn = os.path.join(config.data_root, uid, args.img_fn)
+    if not os.path.exists(img_fn):
+        img_fn = os.path.join(config.data_root, uid, 'char/texture.png')
+    single_image = Image.open(img_fn)
+    if uid in ['0b39d3ae37ee430dbe721cdcc40e270c',
+               'b2f0411a69b149088282f262b77970a7',
+               '7d64695e10134f4883cf0f646c21ed30']:
+        single_image = add_gray(single_image)
+    
     batch = prepare_data(single_image, config)
     pipeline.set_progress_bar_config(disable=True)
     seed = int(config.seed)
@@ -79,6 +90,7 @@ def run_pipeline(pipeline, config, single_image, write_image=True):
     images_pred = out[bsz:]
     VIEWS = config.views
     num_views = len(VIEWS)
+    res = config.resolution
 
     if write_image:
         normal_dir = os.path.join(config.output_dir, "normal")
@@ -92,16 +104,22 @@ def run_pipeline(pipeline, config, single_image, write_image=True):
 
         for j in range(num_views):
             view = VIEWS[j]
-            normal = tensor2pil(normals_pred[j]).resize((1024, 1024), Image.LANCZOS)
-            color = tensor2pil(images_pred[j]).resize((1024, 1024), Image.LANCZOS)
+            normal = tensor2pil(normals_pred[j]).resize(res, Image.LANCZOS)
+            color = tensor2pil(images_pred[j]).resize(res, Image.LANCZOS)
+
             if view == 'front':
-                mask = mask_front.resize((1024, 1024), Image.NEAREST)
+                mask = mask_front.resize(res, Image.NEAREST)
             elif view == 'back':
-                mask = mask_back.resize((1024, 1024), Image.NEAREST)
+                mask = mask_back.resize(res, Image.NEAREST)
             else:
-                mask = remove_background(session, normal)
-                mask = ((np.array(mask)>127)*255).astype(np.uint8)
-                mask = Image.fromarray(mask)
+                if uid in ['01522711d3b642ddbfb506307a007990', 
+                           '1a2fd47487a24c4c84f2c7d0f7d35147',
+                           '1f1654afb5aa4f8daa5db9a96351c226',
+                           'd77b86a6b2024cffa36f010e72c0a2af'
+                           ]:
+                    mask = remove_background(session, normal)
+                else:
+                    mask = remove_background(session, color)
 
             normal.save(os.path.join(normal_dir, f"{view}.png"))
             color.save(os.path.join(color_dir, f"{view}.png"))
@@ -132,6 +150,14 @@ def remove_background(session, image_pil):
     return result
 
 
+def add_gray(img):
+    img = np.array(img, dtype=np.float32)
+    rgb = img[:,:,0:3] * 0.8
+    mask = img[:,:,3:4]/255.
+    img[:,:,0:3] = rgb * mask + 255 * (1-mask)
+    return Image.fromarray(img.astype(np.uint8))
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='mv generation')
@@ -146,21 +172,11 @@ if __name__ == '__main__':
     pipeline = load_wonder3d_pipeline(config)
     torch.set_grad_enabled(False)
     pipeline.to(f'cuda:0')
-    data_root = config.data_root
 
     if args.all:
         with open(config.uid_list_file) as f:
             all_uids = json.load(f)
         for uid in all_uids:
-            print(uid)
-            img_fn = os.path.join(data_root, uid, args.img_fn)
-            img = Image.open(img_fn)
-            config.output_dir = os.path.join(data_root, uid, args.save_folder)
-            run_pipeline(pipeline, config, img)
+            mv(uid, pipeline, config)
     else:
-        print(args.uid)
-        img_fn = os.path.join(data_root, args.uid, args.img_fn)
-        img = Image.open(img_fn)
-        config.output_dir = os.path.join(data_root, args.uid, args.save_folder)
-        run_pipeline(pipeline, config, img)
-
+        mv(args.uid, pipeline, config)
