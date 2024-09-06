@@ -1,5 +1,5 @@
 # DrawingSpinUp: 3D Animation from Single Character Drawings
-![image](https://github.com/DrawingSpinUp2024/drawingspinup2024.github.io/blob/main/static/images/teaser/fig_teaser.png)
+![image](docs/static/images/teaser/fig_teaser.png)
 This is the official PyTorch implementation of this paper: [DrawingSpinUp: 3D Animation from Single Character Drawings](https://drawingspinup2024.github.io).
 
 ## Install
@@ -42,7 +42,7 @@ cd ../..
 ```
 
 ## Try A Toy
-For convenience, here we offer an example *ff7ab74a67a443e3bda61e69577f4e80* with two retargeted animation files. you can directly run the following scripts to get two stylized animations. 
+For convenience, here we offer an example *ff7ab74a67a443e3bda61e69577f4e80* with two retargeted animation files. you can directly run the following scripts to generate two stylized animations. 
 ```sh
 dataset
   └── AnimateDrawings
@@ -83,7 +83,7 @@ python gif_writer.py --uid ff7ab74a67a443e3bda61e69577f4e80
 cd ..
 ```
 
-![image](https://github.com/DrawingSpinUp2024/drawingspinup2024.github.io/blob/main/results/gallery/ff7ab74a67a443e3bda61e69577f4e80.gif)
+![image](docs/results/gallery/ff7ab74a67a443e3bda61e69577f4e80.gif)
 
 ## Step by Step
 ### Step-1: Contour Removal
