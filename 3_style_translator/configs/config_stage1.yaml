@@ -1,0 +1,77 @@
+# Generator
+generator: &generator_j
+  type: GeneratorJ_RIC
+  args:
+    use_bias: False
+    tanh: True
+    append_smoothers: True
+    resnet_blocks: 7
+    filters: [32, 64, 128, 128, 128, 64]
+    input_channels: 3
+
+
+# Optimizer of Generator
+opt_generator: &opt_generator
+  type: Adam
+  args:
+    lr: 0.0004
+    betas: [0.9, 0.999]
+    weight_decay: 0.00001
+
+
+# Discriminator
+discriminator: &discriminatorn
+  type: DiscriminatorN_IN
+  args:
+    num_filters: 12
+    n_layers: 2
+
+
+# Optimizer of Discriminator
+opt_discriminator: &opt_discriminator
+  type: Adam
+  args:
+    lr: 0.0004
+    betas: [0.9, 0.999]
+    weight_decay: 0.00001
+
+
+# Parameters of Perception Loss (VGG-Loss)
+perception_loss: &perception_loss
+  weight: 6.0
+  perception_model:
+    type: PerceptualVGG19
+    args:
+      feature_layers: [0, 3, 5]
+      use_normalization: False
+
+
+# Training Parameters
+trainer: &trainer_1
+  batch_size: 40
+  num_workers: 1
+  epochs: 3 
+  reconstruction_weight: 4.
+  adversarial_weight: 0.5
+  use_image_loss: True
+  reconstruction_criterion: L1Loss
+  adversarial_criterion: MSELoss
+  log_interval: 1000
+  patch_size: 32
+  pre_dir: 'color'
+  post_name: 'ffc_resnet_inpainted'
+
+
+# "Main" of this YAML file
+job:
+    generator: *generator_j
+    opt_generator: *opt_generator
+    discriminator: *discriminatorn
+    opt_discriminator: *opt_discriminator
+    perception_loss: *perception_loss
+    trainer: *trainer_1
+    device: "cuda:0"
+    root_dir: '../dataset/AnimatedDrawings/preprocessed'
+    
+    
+
