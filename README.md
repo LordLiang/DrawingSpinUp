@@ -1,6 +1,6 @@
 # DrawingSpinUp: 3D Animation from Single Character Drawings
 ![image](docs/static/images/teaser/fig_teaser.png)
-This is the official PyTorch implementation of this paper: [DrawingSpinUp: 3D Animation from Single Character Drawings](https://drawingspinup2024.github.io).
+This is the official PyTorch implementation of this paper: [DrawingSpinUp: 3D Animation from Single Character Drawings](https://lordliang.github.io/DrawingSpinUp/).
 
 ## Install
 Hardware: 
