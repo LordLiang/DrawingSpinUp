@@ -1,6 +1,8 @@
-# DrawingSpinUp: 3D Animation from Single Character Drawings
+# DrawingSpinUp
+3D Animation from Single Character Drawings (Siggraph Asia 2024)
+## [Paper](https://arxiv.org/abs/2409.08615) | [Project page](https://lordliang.github.io/DrawingSpinUp/)
+
 ![image](docs/static/images/teaser/fig_teaser.png)
-This is the official PyTorch implementation of this paper: [DrawingSpinUp: 3D Animation from Single Character Drawings](https://lordliang.github.io/DrawingSpinUp/).
 
 ## Install
 Hardware: 
@@ -23,7 +25,7 @@ git clone https://github.com/cprogrammer1994/python-mesh-raycast
 cd python-mesh-raycast
 python setup.py develop
 ```
-Clone this repository and download our 120 processed character drawings and reconstructed 3D characters from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EVNRuFdeNrhFt0qkifwCuCwBIhJWSfEke5KvYF_hk91FcQ?e=FtLauE) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture_with_bg.png' with its foreground mask 'mask.png'.
+Clone this repository and download our 120 processed character drawings and reconstructed 3D characters from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EVNRuFdeNrhFt0qkifwCuCwBIhJWSfEke5KvYF_hk91FcQ?e=FtLauE) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'.
 
 ```sh
 git clone https://github.com/LordLiang/DrawingSpinUp.git
@@ -145,6 +147,22 @@ python gif_writer.py --uid YOUR_EXAMPLE_ID
 cd ..
 ```
 
+## Acknowledgements
+We have intensively borrow codes from the following repositories. Many thanks to the authors for sharing their codes.
+- [LaMa](https://github.com/advimman/lama)
+- [Wonder3D](https://github.com/xxlong0/Wonder3D)
+- [Few-Shot-Patch-Based-Training](https://github.com/OndrejTexler/Few-Shot-Patch-Based-Training)
+
+## Citation
+If you find this repository useful in your project, please cite the following work. :)
+```
+@article{zhou2024drawingspinup,
+  title={DrawingSpinUp: 3D Animation from Single Character Drawings},
+  author={Zhou, Jie and Xiao, Chufeng and Lam, Miu-Ling and Fu, Hongbo},
+  journal={arXiv preprint arXiv:2409.08615},
+  year={2024}
+}
+```
 
 
 
