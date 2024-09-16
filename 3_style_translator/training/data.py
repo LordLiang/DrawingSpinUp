@@ -77,7 +77,7 @@ class DatasetPatches_M(torch.utils.data.Dataset):
         
         self.pre_color = Image.open(os.path.join(self.data_root, self.pre_dir, fileName))
         self.mask = self.pre_color.split()[-1]
-        if os.path.exists(os.path.join(self.post_dir, self.post_name + '.png')):
+        if not os.path.exists(os.path.join(self.post_dir, self.post_name + '.png')):
             self.post_name == 'texture_with_bg'
         self.post_color = Image.open(os.path.join(self.post_dir, self.post_name + '.png'))
         self.post_color = replace_alpha(self.post_color, self.mask)
