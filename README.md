@@ -1,5 +1,5 @@
-# DrawingSpinUp
-3D Animation from Single Character Drawings (Siggraph Asia 2024)
+# DrawingSpinUp: 3D Animation from Single Character Drawings (Siggraph Asia 2024)
+
 ## [Paper](https://arxiv.org/abs/2409.08615) | [Project page](https://lordliang.github.io/DrawingSpinUp/)
 
 ![image](docs/static/images/teaser/fig_teaser.png)
