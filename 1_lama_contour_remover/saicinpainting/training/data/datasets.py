@@ -47,6 +47,7 @@ class InpaintingDrawingsDataset(Dataset):
         with open(uid_json) as f:
             self.uids = json.load(f)
             self.uids.remove('00d9710f5e9d438db188d78b64b4a1f4')
+            self.uids.remove('2a8d91dfc5a7422d9f962d3f02e3b4c0')
 
     def __len__(self):
         return len(self.uids)
