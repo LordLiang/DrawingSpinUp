@@ -68,7 +68,7 @@ The 'mesh/fbx_files/dab.fbx' and 'mesh/fbx_files/jumping.fbx' are two retargeted
 ```sh
 cd 3_style_translator
 # for headless rendering
-export DISPLAY=:1
+# export DISPLAY=:1 (the value may be different for you system)
 # render keyframe pair for training
 python run_render.py --uid ff7ab74a67a443e3bda61e69577f4e80
 # stage1 training
