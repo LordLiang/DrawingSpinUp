@@ -72,6 +72,8 @@ cd 3_style_translator
 export DISPLAY=:1 
 # render keyframe pair for training
 python run_render.py --uid ff7ab74a67a443e3bda61e69577f4e80
+# The default rendering engine is 'BLENDER_EEVEE' and you can change it to 'CYCLES' by:
+python run_render.py --uid ff7ab74a67a443e3bda61e69577f4e80 --engine_type CYCLES
 # stage1 training
 python train_stage1.py --uid ff7ab74a67a443e3bda61e69577f4e80
 # stage2 training
