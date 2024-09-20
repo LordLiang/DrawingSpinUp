@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--uid', default='0dd66be9d0534b93a092d8c4c4dfd30a', help='image uid')
     parser.add_argument('--blender_install_path', default='../blender-3.3.1-linux-x64/blender', help='blender path')
     parser.add_argument('--test', action='store_true', help='test')
+    parser.add_argument('--engine_type', default='CYCLES', help='BLENDER_EEVEE/CYCLES')
     args = parser.parse_args()
 
     input_dir = os.path.join(args.data_dir, args.uid, 'mesh/fbx_files')
@@ -69,7 +70,7 @@ if __name__ == '__main__':
                 fbx_file = os.path.join(input_dir, '%s.fbx'%(action_type))
                 config_file = 'configs/blender/config_ortho.blend'
 
-            subprocess.run(f'{args.blender_install_path} -b {config_file} -E BLENDER_EEVEE --python {script_file} \
+            subprocess.run(f'{args.blender_install_path} -b {config_file} -E {args.engine_type} --python {script_file} \
                                                         -- --fbx_file {fbx_file} \
                                                             --output_dir {output_dir} \
                                                             --mesh_file {mesh_file}', shell=True)
