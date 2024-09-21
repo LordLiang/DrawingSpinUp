@@ -159,11 +159,11 @@ We have intensively borrow codes from the following repositories. Many thanks to
 ## Citation
 If you find this repository useful in your project, please cite the following work. :)
 ```
-@article{zhou2024drawingspinup,
-  title={DrawingSpinUp: 3D Animation from Single Character Drawings},
-  author={Zhou, Jie and Xiao, Chufeng and Lam, Miu-Ling and Fu, Hongbo},
-  journal={arXiv preprint arXiv:2409.08615},
-  year={2024}
+@inproceedings{zhou2024drawingspinup,
+  author    = {Zhou, Jie and Xiao, Chufeng and Lam, Miu-Ling and Fu, Hongbo},
+  title     = {DrawingSpinUp: 3D Animation from Single Character Drawings},
+  booktitle = {SIGGRAPH Asia 2024 Conference Papers},
+  year      = {2024},
 }
 ```
 
