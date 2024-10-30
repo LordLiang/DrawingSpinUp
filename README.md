@@ -1,8 +1,16 @@
 # DrawingSpinUp: 3D Animation from Single Character Drawings (Siggraph Asia 2024)
 
-## [Paper](https://arxiv.org/abs/2409.08615) | [Project page](https://lordliang.github.io/DrawingSpinUp/)
+
+<a href='https://arxiv.org/abs/2409.08615'><img src='https://img.shields.io/badge/arXiv-2310.12190-b31b1b.svg'></a> &nbsp;
+<a href='https://lordliang.github.io/DrawingSpinUp/'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;
+<a href='https://huggingface.co/papers/2409.08615'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Page-blue'></a> &nbsp;
+<a href='https://www.youtube.com/watch?v=tCkX6hLXaO4&t=3s'><img src='https://img.shields.io/badge/Youtube-Video-b31b1b.svg'></a> &nbsp;
+<a href='https://openbayes.com/console/public/tutorials/7r7H1en6BiN'><img src='https://img.shields.io/badge/Demo-OpenBayes贝式计算-blue'></a>
+
 
 ![image](docs/static/images/teaser/fig_teaser.png)
+
+
 
 ## Install
 Hardware: 
