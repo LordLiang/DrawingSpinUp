@@ -25,7 +25,7 @@ Install the required packages:
 conda create -n drawingspinup python=3.8
 conda activate drawingspinup
 pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
-pip install -r requirements.txt
+pip install -r requirements.txt # only tested on diffusers[torch]==0.19.3, may have conflicts with newer versions of diffusers!!!
 # tiny-cuda-nn
 pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 # python-mesh-raycast
