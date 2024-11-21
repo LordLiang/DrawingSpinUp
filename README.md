@@ -130,11 +130,15 @@ cd ..
 ```
 ### Step-3: Stylized Contour Restoration
 
-#### 1) Rigging & Retargeting
+#### 1) Rigging
 
-Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically. Then we can directly retarget a Mixamo motion onto the rigged character online. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline.
+Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically and download the rigged character in rest pose as 'mesh/fbx_files/rest_pose.fbx'. 
 
-#### 2) Rendering & Training & Inference
+#### 2) Retargeting
+
+Then we can directly retarget a Mixamo motion (e.g., jumping) onto the rigged character online and download the character with animation as 'mesh/fbx_files/jumping.fbx'. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline to generate the animation fbx file.
+
+#### 3) Rendering & Training & Inference
 
 We need to train a model for each sample. Once trained, the model can be applied directly to any new animation frames without further training.
 
