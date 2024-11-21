@@ -56,6 +56,8 @@ For convenience, here we offer an example *ff7ab74a67a443e3bda61e69577f4e80* wit
 ```sh
 dataset
   └── AnimateDrawings
+      ├── drawings_uids.json
+      ├── drawings_uids_thinning.json
       └── preprocessed
           └── ff7ab74a67a443e3bda61e69577f4e80
               ├── mesh
@@ -99,6 +101,22 @@ cd ..
 ![image](docs/results/gallery/ff7ab74a67a443e3bda61e69577f4e80.gif)
 
 ## Step by Step
+Assuming you have now drawn a character, you need: 
+  - process it to a size of 512x512 and obtain its mask, then give it a name (e.g, 'xxx'), namely, so-called uid.
+  - remember write this new uid into the 'drawings_uids.json' and 'drawings_uids_thinning.json' (if need thinning operation).
+```sh
+dataset
+  └── AnimateDrawings
+      ├── drawings_uids.json
+      ├── drawings_uids_thinning.json
+      └── preprocessed
+          └── xxx
+              └── char
+                  ├── mask.png
+                  ├── texture.png
+                  └── texture_with_bg.png
+
+```
 ### Step-1: Contour Removal
 We use [FFC-ResNet](https://github.com/advimman/lama) as the backbone to predict the contour region of a given character drawing. 
 For model training, you can refer to the original repo.
@@ -110,6 +128,21 @@ cd 1_lama_contour_remover
 unzip experiments.zip
 python predict.py
 cd ..
+```
+Then you will get:
+```sh
+dataset
+  └── AnimateDrawings
+      ├── drawings_uids.json
+      ├── drawings_uids_thinning.json
+      └── preprocessed
+          └── xxx
+              └── char
+                  ├── ffc_resnet_inpainted.png
+                  ├── mask.png
+                  ├── texture.png
+                  └── texture_with_bg.png
+
 ```
 ### Step-2: Textured Character Generation
 Firstly please download the pretrained [isnet](https://xuebinqin.github.io/dis/index.html) model ([isnet_dis.onnx](https://huggingface.co/stoned0651/isnet_dis.onnx/resolve/main/isnet_dis.onnx)) for background removal of generated multi-view images.
@@ -128,17 +161,51 @@ python mv.py --uid YOUR_EXAMPLE_ID
 python recon.py --uid YOUR_EXAMPLE_ID
 cd ..
 ```
+Then you will get:
+```sh
+dataset
+  └── AnimateDrawings
+      ├── drawings_uids.json
+      ├── drawings_uids_thinning.json
+      └── preprocessed
+          └── xxx
+              ├── mesh
+              │   └── it3000-mc512-f50000_c_r_s_cbp.obj      
+              └── char
+                  ├── ffc_resnet_inpainted.png
+                  ├── mask.png
+                  ├── texture.png
+                  └── texture_with_bg.png
+
+```
 ### Step-3: Stylized Contour Restoration
 
-#### 1) Rigging
+#### 1) Rigging & Retargeting
 
-Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically and download the rigged character in rest pose as 'mesh/fbx_files/rest_pose.fbx'. 
+  - Once we get the textured character, we use [Mixamo](https://www.mixamo.com) to rig it automatically and download the rigged character in rest pose as 'mesh/fbx_files/rest_pose.fbx'. 
+  - Then we can directly retarget a Mixamo motion (e.g., jumping) onto the rigged character online and download the character with animation as 'mesh/fbx_files/jumping.fbx'. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline to generate the animation fbx file.
 
-#### 2) Retargeting
+Then you will get:
+```sh
+dataset
+  └── AnimateDrawings
+      ├── drawings_uids.json
+      ├── drawings_uids_thinning.json
+      └── preprocessed
+          └── xxx
+              ├── mesh
+              ├── fbx_files
+              │   │   ├── rest_pose.fbx
+              │   │   └── jumping.fbx
+              │   └── it3000-mc512-f50000_c_r_s_cbp.obj      
+              └── char
+                  ├── ffc_resnet_inpainted.png
+                  ├── mask.png
+                  ├── texture.png
+                  └── texture_with_bg.png
 
-Then we can directly retarget a Mixamo motion (e.g., jumping) onto the rigged character online and download the character with animation as 'mesh/fbx_files/jumping.fbx'. We can also use [rokoko-studio-live-blender](https://github.com/Rokoko/rokoko-studio-live-blender) to retarget a 3D motion (e.g., *.bvh, *.fbx) onto the rigged character offline to generate the animation fbx file.
-
-#### 3) Rendering & Training & Inference
+```
+#### 2) Rendering & Training & Inference
 
 We need to train a model for each sample. Once trained, the model can be applied directly to any new animation frames without further training.
 
