@@ -27,6 +27,36 @@ def depth2edge(exr_path):
     edge = cv2.dilate(edge, kernel, iterations=1)
     return edge
 
+# get edge from pos
+def pos2edge(pos_path):
+    pos = cv2.imread(pos_path, -1)
+    pos_float = pos.astype(np.float32) / 255.0
+
+    # 分离三个通道
+    channel_b, channel_g, channel_r, alpha = cv2.split(pos_float)
+    channel_b[alpha<1] = 2
+    channel_g[alpha<1] = 2
+    channel_r[alpha<1] = 2
+
+
+    # 计算每个通道的梯度
+    gradient_x_b = cv2.Sobel(channel_b, cv2.CV_64F, 1, 0, ksize=3)
+    gradient_y_b = cv2.Sobel(channel_b, cv2.CV_64F, 0, 1, ksize=3)
+
+    gradient_x_g = cv2.Sobel(channel_g, cv2.CV_64F, 1, 0, ksize=3)
+    gradient_y_g = cv2.Sobel(channel_g, cv2.CV_64F, 0, 1, ksize=3)
+
+    gradient_x_r = cv2.Sobel(channel_r, cv2.CV_64F, 1, 0, ksize=3)
+    gradient_y_r = cv2.Sobel(channel_r, cv2.CV_64F, 0, 1, ksize=3)
+
+    # 计算每个通道的梯度幅值
+    val_b = np.sqrt(np.square(gradient_x_b) + np.square(gradient_y_b))
+    val_g = np.sqrt(np.square(gradient_x_g) + np.square(gradient_y_g))
+    val_r = np.sqrt(np.square(gradient_x_r) + np.square(gradient_y_r))
+    edges = np.maximum(np.maximum(val_b, val_g), val_r)
+    edges = ((edges>0.3) * 255).astype(np.uint8)
+    return edges
+
 
 if __name__ == '__main__':
 
@@ -58,7 +88,7 @@ if __name__ == '__main__':
 
         start = time.time()
 
-        if not os.path.exists(os.path.join(output_dir, 'depth')):
+        if not os.path.exists(os.path.join(output_dir, 'color')):
             # render color and pos
             if action_type == 'rest_pose':
                 fbx_file = os.path.join(input_dir, 'rest_pose.fbx')
@@ -76,14 +106,19 @@ if __name__ == '__main__':
                                                             --mesh_file {mesh_file}', shell=True)
 
         # compute edge  
-        if os.path.exists(os.path.join(output_dir, 'depth')) and os.path.exists(os.path.join(args.data_dir, args.uid, 'char/ffc_resnet_inpainted.png')):             
+        if not os.path.exists(os.path.join(output_dir, 'edge')):             
             os.makedirs(os.path.join(output_dir, 'edge'), exist_ok=True)
             files = os.listdir(os.path.join(output_dir, 'pos'))
             
             for file in files:
-                # z-depth
-                depth_fn = os.path.join(output_dir, 'depth', file.replace('png', 'exr'))
-                edge = depth2edge(depth_fn)
+                # get edge from depth
+                # depth_fn = os.path.join(output_dir, 'depth', file.replace('png', 'exr'))
+                # edge = depth2edge(depth_fn)
+                # cv2.imwrite(os.path.join(output_dir, 'edge', file), 255-edge)
+
+                # get edge from pos
+                pos_fn = os.path.join(output_dir, 'pos', file)
+                edge = pos2edge(pos_fn)
                 cv2.imwrite(os.path.join(output_dir, 'edge', file), 255-edge)
 
         end = time.time()
