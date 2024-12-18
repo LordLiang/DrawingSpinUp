@@ -38,7 +38,6 @@ def pos2edge(pos_path):
     channel_g[alpha<1] = 2
     channel_r[alpha<1] = 2
 
-
     # 计算每个通道的梯度
     gradient_x_b = cv2.Sobel(channel_b, cv2.CV_64F, 1, 0, ksize=3)
     gradient_y_b = cv2.Sobel(channel_b, cv2.CV_64F, 0, 1, ksize=3)
