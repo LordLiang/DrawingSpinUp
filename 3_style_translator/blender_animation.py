@@ -76,6 +76,7 @@ def render_color_and_pos(fbx_file, mesh_file, output_dir):
             bpy.data.scenes["Scene"].render.resolution_y = size
             bpy.data.cameras["Camera"].ortho_scale = 1.35*(size/512)
 
+    bpy.context.scene.view_settings.view_transform = 'Standard' # manage color
     material = bpy.data.materials.new(name='VertexColorMaterial')
     mesh.materials.append(material)
     mesh.vertex_colors.new(name='VertexColors')
@@ -96,7 +97,7 @@ def render_color_and_pos(fbx_file, mesh_file, output_dir):
         vertex_colors.data[i].color = (color[0], color[1], color[2], 1)
     bpy.ops.render.render(animation=True)
 
-    # pos and depth
+    # pos
     save_path = os.path.join(output_dir, 'pos')
     os.makedirs(save_path, exist_ok=True)
     bpy.data.scenes['Scene'].render.filepath = save_path + '/'
@@ -104,19 +105,19 @@ def render_color_and_pos(fbx_file, mesh_file, output_dir):
         vertex_colors.data[i].color = (color[0], color[1], color[2], 1)
 
     # depth
-    depth_save_path = os.path.join(output_dir, 'depth')
-    os.makedirs(depth_save_path, exist_ok=True)
-    bpy.context.scene.use_nodes = True
-    tree = bpy.context.scene.node_tree
-    for n in tree.nodes:
-        tree.nodes.remove(n)
-    bpy.data.scenes['Scene'].view_layers["ViewLayer"].use_pass_z = True
-    render_node = tree.nodes.new(type='CompositorNodeRLayers')
-    depth_node = tree.nodes.new(type='CompositorNodeOutputFile')
-    depth_node.format.file_format = 'OPEN_EXR'
-    depth_node.base_path = ''
-    depth_node.file_slots[0].path = depth_save_path + '/'
-    tree.links.new(render_node.outputs['Depth'], depth_node.inputs[0])
+    # depth_save_path = os.path.join(output_dir, 'depth')
+    # os.makedirs(depth_save_path, exist_ok=True)
+    # bpy.context.scene.use_nodes = True
+    # tree = bpy.context.scene.node_tree
+    # for n in tree.nodes:
+    #     tree.nodes.remove(n)
+    # bpy.data.scenes['Scene'].view_layers["ViewLayer"].use_pass_z = True
+    # render_node = tree.nodes.new(type='CompositorNodeRLayers')
+    # depth_node = tree.nodes.new(type='CompositorNodeOutputFile')
+    # depth_node.format.file_format = 'OPEN_EXR'
+    # depth_node.base_path = ''
+    # depth_node.file_slots[0].path = depth_save_path + '/'
+    # tree.links.new(render_node.outputs['Depth'], depth_node.inputs[0])
     bpy.ops.render.render(animation=True)
 
 
