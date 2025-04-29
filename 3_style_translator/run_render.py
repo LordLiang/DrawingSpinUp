@@ -64,7 +64,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='frame rendering')
     parser.add_argument('--data_dir', default='../dataset/AnimatedDrawings/preprocessed', help='data root')
     parser.add_argument('--uid', default='0dd66be9d0534b93a092d8c4c4dfd30a', help='image uid')
-    parser.add_argument('--blender_install_path', default='../blender-3.3.1-linux-x64/blender', help='blender path')
+    parser.add_argument('--blender_install_path', default='../blender-3.6.14-linux-x64/blender', help='blender path')
     parser.add_argument('--test', action='store_true', help='test')
     parser.add_argument('--engine_type', default='BLENDER_EEVEE', help='BLENDER_EEVEE/CYCLES')
     args = parser.parse_args()
