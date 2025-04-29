@@ -87,22 +87,21 @@ if __name__ == '__main__':
 
         start = time.time()
 
-        if not os.path.exists(os.path.join(output_dir, 'color')):
-            # render color and pos
-            if action_type == 'rest_pose':
-                fbx_file = os.path.join(input_dir, 'rest_pose.fbx')
-                config_file = 'configs/blender/config_ortho.blend'
-            if action_type == 'rest_rotate':
-                fbx_file = os.path.join(input_dir, 'rest_pose.fbx')
-                config_file = 'configs/blender/config_ortho_rotate.blend'
-            else:
-                fbx_file = os.path.join(input_dir, '%s.fbx'%(action_type))
-                config_file = 'configs/blender/config_ortho.blend'
+        # render color and pos
+        if action_type == 'rest_pose':
+            fbx_file = os.path.join(input_dir, 'rest_pose.fbx')
+            config_file = 'configs/blender/config_ortho.blend'
+        if action_type == 'rest_rotate':
+            fbx_file = os.path.join(input_dir, 'rest_pose.fbx')
+            config_file = 'configs/blender/config_ortho_rotate.blend'
+        else:
+            fbx_file = os.path.join(input_dir, '%s.fbx'%(action_type))
+            config_file = 'configs/blender/config_ortho.blend'
 
-            subprocess.run(f'{args.blender_install_path} -b {config_file} -E {args.engine_type} --python {script_file} \
-                                                        -- --fbx_file {fbx_file} \
-                                                            --output_dir {output_dir} \
-                                                            --mesh_file {mesh_file}', shell=True)
+        subprocess.run(f'{args.blender_install_path} -b {config_file} -E {args.engine_type} --python {script_file} \
+                                                    -- --fbx_file {fbx_file} \
+                                                        --output_dir {output_dir} \
+                                                        --mesh_file {mesh_file}', shell=True)
 
         # compute edge  
         if not os.path.exists(os.path.join(output_dir, 'edge')):             
