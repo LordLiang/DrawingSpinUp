@@ -40,12 +40,12 @@ Clone this repository and download our 120 processed character drawings and reco
 git clone https://github.com/LordLiang/DrawingSpinUp.git
 cd DrawingSpinUp
 # download blender for frame rendering
-wget https://download.blender.org/release/Blender3.3/blender-3.3.1-linux-x64.tar.xz
-tar -xvf blender-3.3.1-linux-x64.tar.xz
+wget https://download.blender.org/release/Blender3.6/blender-3.6.14-linux-x64.tar.xz
+tar -xvf blender-3.6.14-linux-x64.tar.xz
 # install trimesh for blender's python
 wget https://bootstrap.pypa.io/get-pip.py
-./blender-3.3.1-linux-x64/3.3/python/bin/python3.10 get-pip.py
-./blender-3.3.1-linux-x64/3.3/python/bin/python3.10 -m pip install trimesh
+./blender-3.6.14-linux-x64/3.3/python/bin/python3.10 get-pip.py
+./blender-3.6.14-linux-x64/3.3/python/bin/python3.10 -m pip install trimesh
 cd dataset/AnimatedDrawings
 # download preprocessed.zip and put it here
 unzip preprocessed.zip
