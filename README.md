@@ -14,17 +14,17 @@
 
 ## Install
 Hardware: 
-  - All experiments are run on a single RTX 2080Ti GPU.
+  - All experiments are run on a single RTX 4090 GPU.
 Setup environment:
-  - Python 3.8.0
-  - PyTorch 1.13.1
-  - Cuda Toolkit 11.6
-  - Ubuntu 18.04
+  - Python 3.8.20
+  - PyTorch 2.0.0
+  - Cuda Toolkit 11.8
+  - Ubuntu 22.04
 Install the required packages:
 ```sh
 conda create -n drawingspinup python=3.8
 conda activate drawingspinup
-pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
+pip install torch==2.0.0+cu118 torchvision==0.15.1+cu118 torchaudio==2.0.1+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt # only tested on diffusers[torch]==0.19.3, may have conflicts with newer versions of diffusers!!!
 # tiny-cuda-nn
 pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
