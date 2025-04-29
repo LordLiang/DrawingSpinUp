@@ -24,7 +24,6 @@ Install the required packages:
 ```sh
 conda create -n drawingspinup python=3.8
 conda activate drawingspinup
-# For systems which have a different version of CUDA installed (not 11.8), you can install cudatoolkit with the right version i.e. `conda install cudatoolkit==11.8 -c conda-forge`
 pip install torch==2.0.0+cu118 torchvision==0.15.1+cu118 torchaudio==2.0.1+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt # only tested on diffusers[torch]==0.19.3, may have conflicts with newer versions of diffusers!!!
 # tiny-cuda-nn
