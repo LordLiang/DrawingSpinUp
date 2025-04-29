@@ -14,12 +14,14 @@
 
 ## Install
 Hardware: 
-  - All experiments are run on a single RTX 4090 GPU.
+  - All experiments are run on a single RTX 4090 GPU. (A single RTX 2080 Ti GPU is also OK.)
+
 Setup environment:
   - Python 3.8.20
   - PyTorch 2.0.0
   - Cuda Toolkit 11.8
   - Ubuntu 22.04
+
 Install the required packages:
 ```sh
 conda create -n drawingspinup python=3.8
