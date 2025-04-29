@@ -5,27 +5,27 @@ import argparse
 import time
 import glob
 import cv2
-import OpenEXR
-import Imath
-import array
+# import OpenEXR
+# import Imath
+# import array
 
 
-kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-def depth2edge(exr_path):
-    exr_file = OpenEXR.InputFile(exr_path)
-    data_window = exr_file.header()['dataWindow']
-    w = data_window.max.x - data_window.min.x + 1
-    h = data_window.max.y - data_window.min.y + 1
+# kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+# def depth2edge(exr_path):
+#     exr_file = OpenEXR.InputFile(exr_path)
+#     data_window = exr_file.header()['dataWindow']
+#     w = data_window.max.x - data_window.min.x + 1
+#     h = data_window.max.y - data_window.min.y + 1
 
-    depth = array.array('f', exr_file.channel('R', Imath.PixelType(Imath.PixelType.FLOAT)))
-    depth = np.array(depth).reshape((h,w))
-    bg = depth>1000
-    depth_min, depth_max = depth[~bg].min(), depth[~bg].max()
-    depth = (depth-depth_min) / (depth_max-depth_min)*200
-    depth[bg] = 255
-    edge = cv2.Canny(np.uint8(depth), threshold1=50, threshold2=150)
-    edge = cv2.dilate(edge, kernel, iterations=1)
-    return edge
+#     depth = array.array('f', exr_file.channel('R', Imath.PixelType(Imath.PixelType.FLOAT)))
+#     depth = np.array(depth).reshape((h,w))
+#     bg = depth>1000
+#     depth_min, depth_max = depth[~bg].min(), depth[~bg].max()
+#     depth = (depth-depth_min) / (depth_max-depth_min)*200
+#     depth[bg] = 255
+#     edge = cv2.Canny(np.uint8(depth), threshold1=50, threshold2=150)
+#     edge = cv2.dilate(edge, kernel, iterations=1)
+#     return edge
 
 # get edge from pos
 def pos2edge(pos_path):
