@@ -36,7 +36,7 @@ cd python-mesh-raycast
 python setup.py develop
 cd ..
 ```
-Clone this repository and download our 120 processed character drawings and reconstructed 3D characters from [preprocessed.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/EVNRuFdeNrhFt0qkifwCuCwBIhJWSfEke5KvYF_hk91FcQ?e=FtLauE) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'.
+Clone this repository and download our 120 processed character drawings and reconstructed 3D characters from [preprocessed.zip](https://pan.baidu.com/s/1n2EGtlyL3ExxYly_mLVNmA?pwd=mk69) (a tiny subset of [Amateur Drawings Dataset](https://github.com/facebookresearch/AnimatedDrawings)). Of course you can prepare your own image: a 512x512 character drawing 'texture.png' with its foreground mask 'mask.png'.
 
 ```sh
 git clone https://github.com/LordLiang/DrawingSpinUp.git
@@ -121,7 +121,7 @@ dataset
 We use [FFC-ResNet](https://github.com/advimman/lama) as the backbone to predict the contour region of a given character drawing. 
 For model training, you can refer to the original repo.
 For training image rendering, see [1_lama_contour_remover/bicar_render_codes](1_lama_contour_remover/bicar_render_codes) which are borrowed from [Wonder3D](https://github.com/xxlong0/Wonder3D/tree/main/render_codes).
-Here we focus on inference. Download our pretrained contour removal models from [experiments.zip](https://portland-my.sharepoint.com/:u:/g/personal/jzhou67-c_my_cityu_edu_hk/Ed6BaAAWgIhGqIMjaju_v4kB_K-DIFGu1bQ7zM3CbQMrTw?e=KaltGi).
+Here we focus on inference. Download our pretrained contour removal models from [experiments.zip](https://pan.baidu.com/s/1F1x5wr3o0XGlRqwK3AUdgQ?pwd=439i).
 ```sh
 cd 1_lama_contour_remover
 # download experiments.zip and put it here
